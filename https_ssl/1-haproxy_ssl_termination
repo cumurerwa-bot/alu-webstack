@@ -36,7 +36,7 @@ defaults
 
 frontend http_front
     bind *:80
-    bind *:443 ssl crt /etc/haproxy/certs/CERTNAME.pem
+    bind *:443 ssl crt /etc/haproxy/certs/www.cumurerwa.tech.pem
     mode http
     option h1-case-adjust-bogus-client
     default_backend http_back
