@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
-# Displays DNS record information about subdomains of a given domain
-# shellcheck disable=SC2086
+# Displays the record type and destination of a domain's subdomains
 
-get_info() {
-    dig "$2.$1" | grep -A1 'ANSWER SECTION:' | tail -1 | awk -v s="$2" '{print "The subdomain " s " is a " $4 " record and points to " $5}'
+display_info() {
+    dig "$2.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk -v s="$2" '{print "The subdomain " s " is a " $4 " record and points to " $5}'
 }
 
-if [ "$#" -eq 1 ]; then
-    for sub in www lb-01 web-01 web-02; do
-        get_info "$1" "$sub"
-    done
+if [ -n "$2" ]; then
+    display_info "$1" "$2"
 else
-    get_info "$1" "$2"
+    for s in www lb-01 web-01 web-02; do
+        display_info "$1" "$s"
+    done
 fi
